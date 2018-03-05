@@ -16,6 +16,9 @@ const customModules = {}
  * @param initConf
  */
 
+const values = Object.values ? Object.values : function (obj) {
+  return Object.keys(obj).map(function(e) { return obj[e] })
+}
 
 const install = function (Vue, initConf = {}, mixin) {
   // init Google Analytics
@@ -52,7 +55,7 @@ const install = function (Vue, initConf = {}, mixin) {
   }
 
   if (Object.keys(customModules).length > 0) {
-    Object.values(customModules).forEach((module, index) => {
+    values(customModules).forEach((module, index) => {
       let moduleInstance = new module()
       moduleInstance.init(initConf.modules[Object.keys(customModules)[index]])
       Vue.modulesEnabled.push(moduleInstance)

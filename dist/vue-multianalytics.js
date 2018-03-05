@@ -96,6 +96,12 @@ module.exports =
 	 * @param initConf
 	 */
 
+	var values = Object.values ? Object.values : function (obj) {
+	  return Object.keys(obj).map(function (e) {
+	    return obj[e];
+	  });
+	};
+
 	var install = function install(Vue) {
 	  var initConf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	  var mixin = arguments[2];
@@ -134,7 +140,7 @@ module.exports =
 	  }
 
 	  if (Object.keys(customModules).length > 0) {
-	    Object.values(customModules).forEach(function (module, index) {
+	    values(customModules).forEach(function (module, index) {
 	      var moduleInstance = new module();
 	      moduleInstance.init(initConf.modules[Object.keys(customModules)[index]]);
 	      Vue.modulesEnabled.push(moduleInstance);
